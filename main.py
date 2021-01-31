@@ -40,17 +40,17 @@ def payment2(message):
 	msg = message.text.split()
 	paymentarray.append(msg[0]);
 	msg2 = bot.reply_to(message, 'Вы хотите отправить руб. на номер '+msg[0]+' с комментарием: ?',reply_markup=keyboard2)
-	bot.register_next_step_handler(msg2, payment3)
+	bot.register_next_step_handler(msg2)
 
 def handle_text(message):
-    if message.text == "🤖 BTC Banker":
+    if message.text == "666":
         request = requests.get('https://github.com/')
         if request.status_code == 200:
             bot.send_message(message.chat.id, "https://github.com/"  +msg[0], parse_mode='Markdown')
         else:
             bot.send_message(message.chat.id, " 666 https://github.com/"  +msg[0], parse_mode='Markdown')
             
-    if message.text == "🤖 Chatex Bot":
+    if message.text == "777":
         request = requests.get('https://github.com/b567567567567')
         if request.status_code == 200:
             bot.send_message(message.chat.id, "+", parse_mode='Markdown')
