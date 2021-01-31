@@ -14,7 +14,14 @@ def welcome(message):
 @bot.message_handler(func=lambda message: True, content_types=['text'])
 def handle_text(message):
     if message.text == "🤖 BTC Banker":
-        request = requests.get('https://vk.com/durov')
+        request = requests.get('https://github.com/resilents')
+        if request.status_code == 200:
+            bot.send_message(message.chat.id, "+", parse_mode='Markdown')
+        else:
+            bot.send_message(message.chat.id, "-", parse_mode='Markdown')
+            
+    if message.text == "🤖 Chatex Bot":
+        request = requests.get('https://github.com/b567567567567')
         if request.status_code == 200:
             bot.send_message(message.chat.id, "+", parse_mode='Markdown')
         else:
