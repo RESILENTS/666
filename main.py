@@ -24,9 +24,8 @@ def start_message(message):
     	bot.send_message(message.chat.id,'Authorized',reply_markup=keyboard1)
     else:
     	bot.send_message(message.chat.id,'You are not in whitelist')
-@bot.message_handler(commands=['balance'])
-def balance(message):
-    bot.send_message(message.chat.id, '✅✅✅' + str(api.balance[0]) +'руб✅✅✅')
+
+
 @bot.message_handler(commands=['pay'])
 def payment1(message):
 	msg = bot.reply_to(message, 'Введите номер, сумму, комментарий в таком формате: 79998882233|200|coment')
