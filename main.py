@@ -18,6 +18,7 @@ def handle_start(message):
     url = message.text
     constants.items.append(url)
     bot.register_next_step_handler(message, another_process)
+    bot.send_message(message.chat.id, 'Ссылка на товар ' + url)
     
     
 @bot.message_handler(func=lambda message: True, content_types=['text'])
