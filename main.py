@@ -3,7 +3,6 @@ from telebot import types
 import random
 import time
 import requests
-from constant import Constant
 
 token = '1434012352:AAG4yCSwZBi8PafX8hzR9ac7Xd_bNqnIZsE'
 bot = telebot.TeleBot(token)
@@ -13,13 +12,14 @@ bot = telebot.TeleBot(token)
 def another_process(message):
     bot.send_message(message.chat.id, 'Ссылка на товар ' + message.text)
 
-@bot.message_handler(commands=['add'])
-def handle_start(message):
-    message = bot.send_message(message.chat.id, "Введите ссылку на товар", disable_notification=True)
-    url = message.text
-    constants.items.append(url)
-    bot.register_next_step_handler(message, another_process)
-    bot.send_message(message.chat.id, 'Ссылка на товар ' + url)
+@bot.callback_query_handler(func=lambda call: True)
+def callback_inline(call):
+    if call.data == 'q':
+       msg = bot.send_message(call.message.chat.id, 'Введите текст')
+       bot.register_next_step_handler(msg, q_2)
+
+def q_2(message):
+    print(message.text)
     
     
 @bot.message_handler(func=lambda message: True, content_types=['text'])
