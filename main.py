@@ -9,6 +9,10 @@ bot = telebot.TeleBot(token)
 
 check_username = input ("Введите число: ")
 username6 = int(check_username)
+
+def do_something(user_input):
+    answer = user_input
+    return answer
     
 @bot.message_handler(commands=['start'])
 def welcome(message):
@@ -17,7 +21,7 @@ def welcome(message):
 @bot.message_handler(func=lambda message: True, content_types=['text'])
 def handle_text(message):
     if message.text == "🤖 BTC Banker":
-        request = requests.get('https://github.com/', test_number)
+        request = requests.get('https://github.com/', answer)
         if request.status_code == 200:
             bot.send_message(message.chat.id, "+", parse_mode='Markdown')
         else:
