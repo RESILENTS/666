@@ -9,15 +9,12 @@ bot = telebot.TeleBot(token)
 
     
 @bot.message_handler(commands=['start'])
-def welcome(message):
-    bot.send_message(message.from_user.id, '*🤖 BTCVoucherGen 2.0:* Генератор BTC чеков. Скрипт генерирует ссылки для обнала BTC чеков в *Telegram* ботах.\n\n', parse_mode='Markdown')
-
 def handle_text (message):
     bot.send_message(message.chat.id, "Введите данные")
     @bot.message_handler(content_types=['text'])
     def handle_text(message):
         txt = message.text
-        bot.send_message(message.chat.id, "+", txt)
+        bot.send_message(message.chat.id, "+" + txt)
     
     
 @bot.message_handler(func=lambda message: True, content_types=['text'])
