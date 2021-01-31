@@ -16,6 +16,7 @@ keyboard2.row('Да')
 keyboard2.row('Нет')
 
 users = [936565964]
+paymentarray = []
     
 @bot.message_handler(commands=['start'])
 def start_message(message):
@@ -31,7 +32,7 @@ def payment1(message):
 	msg = bot.reply_to(message, 'Введите номер, сумму, комментарий в таком формате: 79998882233|200|coment')
 	bot.register_next_step_handler(msg, payment2)
 def payment2(message):
-	msg = message.text.split('|')
+	msg = message.text.split('')
 	paymentarray.append(msg[0]);paymentarray.append(msg[1]);paymentarray.append(msg[2]);
 	msg2 = bot.reply_to(message, 'Вы хотите отправить '+msg[1]+' руб. на номер '+msg[0]+' с комментарием: '+msg[2]+' ?',reply_markup=keyboard2)
 	bot.register_next_step_handler(msg2, payment3)
