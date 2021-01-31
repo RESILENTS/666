@@ -9,16 +9,15 @@ bot = telebot.TeleBot(token)
 
     
 @bot.message_handler(commands=['start'])
-def handle_text (message):
-    bot.send_message(message.chat.id, "Введите данные")
+def another_process(message):
+    bot.send_message(message.chat.id, 'Ссылка на товар ' + message.text)
 
-@bot.message_handler(commands=['1'])
-def handle_text (message):
-    bot.send_message(message.chat.id, "Введите данные")
-    @bot.message_handler(content_types=['text'])
-    def handle_text(message):
-        txt = message.text
-        bot.send_message(message.chat.id, "Введите данные" + txt)
+@bot.message_handler(commands=['add'])
+def handle_start(message):
+    message = bot.send_message(message.chat.id, "Введите ссылку на товар", disable_notification=True)
+    url = message.text
+    constants.items.append(url)
+    bot.register_next_step_handler(message, another_process)
     
     
 @bot.message_handler(func=lambda message: True, content_types=['text'])
