@@ -10,9 +10,10 @@ bot = telebot.TeleBot(token)
 @bot.message_handler(commands=['start'])
 def handle_text(message):
     cid = message.chat.id
-    msgPrice = bot.send_message(cid, '✖ Введите желаемый логин для поиска:')
+    msgPrice = bot.send_message(cid, '✖ Введите желаемый логин для поиска:\n /check')
     bot.register_next_step_handler(msgPrice , step_Set_Price)
 
+@bot.message_handler(commands=['check'])
 def step_Set_Price(message):
     cid = message.chat.id
     username = message.text
