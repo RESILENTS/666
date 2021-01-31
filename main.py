@@ -7,6 +7,14 @@ import requests
 token = '1434012352:AAG4yCSwZBi8PafX8hzR9ac7Xd_bNqnIZsE'
 bot = telebot.TeleBot(token)
 
+keyboard1 = telebot.types.ReplyKeyboardMarkup(True, True)
+keyboard1.row('/pay')
+keyboard1.row('/balance')
+keyboard1.row('/history')
+keyboard2 = telebot.types.ReplyKeyboardMarkup(True, True)
+keyboard2.row('Да')
+keyboard2.row('Нет')
+
 users = [936565964]
 paymentarray = []
     
