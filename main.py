@@ -11,13 +11,12 @@ bot = telebot.TeleBot(token)
 @bot.message_handler(commands=['start'])
 def welcome(message):
     bot.send_message(message.from_user.id, '*🤖 BTCVoucherGen 2.0:* Генератор BTC чеков. Скрипт генерирует ссылки для обнала BTC чеков в *Telegram* ботах.\n\n', parse_mode='Markdown')
-    sent_msg = bot.send_message(message.chat.id, "Welcome to bot. what's your name?")
-    bot.register_next_step_handler(sent_msg, name_handler)
+    sent = bot.send_message(message.chat.id, 'Please describe your problem.')
+    bot.register_next_step_handler(sent, hello)
     
-def name_handler(message):
-    name = message.text
-    sent_msg = bot.send_message(message.chat.id, "Your name is ", name)
-    bot.register_next_step_handler(sent_msg, name) #Next message will call the age_handler function
+def hello(message):
+    bot.send_message(message.chat.id, 'Thank you!')
+    bot.send_message(ADMIN_ID, message.chat.id + ' | ' + message.text)
 
     
     
