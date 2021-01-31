@@ -7,20 +7,18 @@ import requests
 token = '1434012352:AAG4yCSwZBi8PafX8hzR9ac7Xd_bNqnIZsE'
 bot = telebot.TeleBot(token)
 
+@bot.message_handler(commands=['start'])
+def handle_text(message):
+    cid = message.chat.id
+    msgPrice = bot.send_message(cid, '✖ Введите желаемый логин для поиска:')
+    bot.register_next_step_handler(msgPrice , step_Set_Price)
+
+def step_Set_Price(message):
+    cid = message.chat.id
+    username = message.text
 
 #searches for usernames
 def usernameSearch():
-    username = input("Enter Username: ").lower()
-    print()
-    #instagram user search
-    print('''indicates username taken [-]
-indicates username available [+]''')
-    instaurl = 'https://instagram.com/' + username
-    instaresponse = get(instaurl, headers=headers)
-    if instaresponse.status_code == 200:
-        print('instagram [-]')
-    else:
-        print('instagram [+]')
     
     #twitter user search
     twitterurl = 'https://twitter.com/' + username
