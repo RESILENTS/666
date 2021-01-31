@@ -9,7 +9,7 @@ from aiogram.types import ReplyKeyboardRemove, \
     ReplyKeyboardMarkup, KeyboardButton, \
     InlineKeyboardMarkup, InlineKeyboardButton
 
-bot = telebot.TeleBot('587983788:AAGmzVdqD1oF1_mNy1th0Cq21VKdrqJmy7U')
+bot = telebot.TeleBot('1434012352:AAG4yCSwZBi8PafX8hzR9ac7Xd_bNqnIZsE')
 conn = psycopg2.connect(dbname='postgres', user='postgres', password='root', host='localhost', port=5433)
 cursor = conn.cursor()
 
