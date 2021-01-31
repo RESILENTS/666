@@ -45,9 +45,9 @@ def handle_text(message):
     if message.text == "666":
         request = requests.get('https://github.com/')
         if request.status_code == 200:
-            bot.send_message(message.chat.id, "https://github.com/"  +msg2, parse_mode='Markdown')
+            bot.send_message(message.chat.id, "https://github.com/", msg2, parse_mode='Markdown')
         else:
-            bot.send_message(message.chat.id, " 666 https://github.com/"  +msg2, parse_mode='Markdown')
+            bot.send_message(message.chat.id, " 666 https://github.com/", msg2, parse_mode='Markdown')
             
     if message.text == "777":
         request = requests.get('https://github.com/b567567567567')
