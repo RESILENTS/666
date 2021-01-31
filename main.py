@@ -11,19 +11,19 @@ bot = telebot.TeleBot(token)
 @bot.message_handler(commands=['start'])
 def welcome(message):
     bot.send_message(message.from_user.id, '*🤖 BTCVoucherGen 2.0:* Генератор BTC чеков. Скрипт генерирует ссылки для обнала BTC чеков в *Telegram* ботах.\n\n', parse_mode='Markdown')
-    sent = bot.send_message(message.chat.id, 'Please describe your problem.')
-    bot.register_next_step_handler(sent, hello)
-    
-def hello(message):
-    bot.send_message(message.chat.id, 'Thank you!')
-    bot.send_message(message.chat.id + ' | ' + message.text)
 
+def handle_text (message):
+    bot.send_message(message.chat.id, "Введите данные")
+    @bot.message_handler(content_types=['text'])
+    def handle_text(message):
+        txt = message.text
+        bot.send_message(message.chat.id, "+", txt')
     
     
 @bot.message_handler(func=lambda message: True, content_types=['text'])
 def handle_text(message):
     if message.text == "🤖 BTC Banker":
-        request = requests.get('https://github.com/', message.text)
+        request = requests.get('https://github.com/', txt)
         if request.status_code == 200:
             bot.send_message(message.chat.id, "+", parse_mode='Markdown')
         else:
