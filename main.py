@@ -12,8 +12,8 @@ keyboard1.row('/pay')
 keyboard1.row('/balance')
 keyboard1.row('/history')
 keyboard2 = telebot.types.ReplyKeyboardMarkup(True, True)
-keyboard2.row('Да')
-keyboard2.row('Нет')
+keyboard2.row('666')
+keyboard2.row('777')
 
 users = [936565964]
 paymentarray = []
@@ -40,7 +40,6 @@ def payment2(message):
 	msg = message.text.split()
 	paymentarray.append(msg[0]);
 	msg2 = bot.reply_to(message, 'Вы хотите отправить руб. на номер '+msg[0]+' с комментарием: ?',reply_markup=keyboard2)
-	bot.register_next_step_handler(msg2)
 
 def handle_text(message):
     if message.text == "666":
