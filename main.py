@@ -14,8 +14,8 @@ def welcome(message):
 
 def name_handler(pm):
     username666 = pm.text
-    sent_msg = bot.send_message(pm.chat.id, f"Your name is {username666}. how old are you?")
-    bot.register_next_step_handler(sent_msg, age_handler, name) #Next message will call the age_handler function
+    sent_msg = bot.send_message(message.from_user.id, "Your name is ", username666)
+    bot.register_next_step_handler(sent_msg, username666) #Next message will call the age_handler function
 
     
     
