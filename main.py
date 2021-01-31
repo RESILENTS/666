@@ -14,10 +14,10 @@ def welcome(message):
 @bot.message_handler(func=lambda message: True, content_types=['text'])
 def handle_text(message):
     if message.text == "🤖 BTC Banker":
-        request = requests.get('http://www.example.com')
+        request = requests.get('https://vk.com/hacker_exploit11')
         if request.status_code == 200:
-            bot.send_message(message.chat.id, "77", parse_mode='Markdown')
+            bot.send_message(message.chat.id, "+", parse_mode='Markdown')
         else:
-            bot.send_message(message.chat.id, "77", parse_mode='Markdown')
+            bot.send_message(message.chat.id, "-", parse_mode='Markdown')
         
 bot.polling(none_stop=True)
