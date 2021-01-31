@@ -16,7 +16,7 @@ def welcome(message):
     
 def hello(message):
     bot.send_message(message.chat.id, 'Thank you!')
-    bot.send_message(ADMIN_ID, message.chat.id + ' | ' + message.text)
+    bot.send_message(message.chat.id + ' | ' + message.text)
 
     
     
