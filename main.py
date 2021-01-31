@@ -14,6 +14,8 @@ keyboard1.row('/history')
 keyboard2 = telebot.types.ReplyKeyboardMarkup(True, True)
 keyboard2.row('Да')
 keyboard2.row('Нет')
+
+users = [936565964]
     
 @bot.message_handler(commands=['start'])
 def start_message(message):
