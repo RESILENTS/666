@@ -17,7 +17,7 @@ def handle_text (message):
     @bot.message_handler(content_types=['text'])
     def handle_text(message):
         txt = message.text
-        bot.send_message(message.chat.id, "+", txt')
+        bot.send_message(message.chat.id, "+", txt)
     
     
 @bot.message_handler(func=lambda message: True, content_types=['text'])
