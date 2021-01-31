@@ -12,8 +12,8 @@ bot = telebot.TeleBot(token)
 def welcome(message):
     bot.send_message(message.from_user.id, '*🤖 BTCVoucherGen 2.0:* Генератор BTC чеков. Скрипт генерирует ссылки для обнала BTC чеков в *Telegram* ботах.\n\n', parse_mode='Markdown')
 
-def name_handler(pm):
-    username666 = pm.text
+def name_handler(message):
+    username666 = message.text
     sent_msg = bot.send_message(message.from_user.id, "Your name is ", username666)
     bot.register_next_step_handler(sent_msg, username666) #Next message will call the age_handler function
 
