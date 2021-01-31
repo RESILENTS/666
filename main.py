@@ -14,7 +14,7 @@ def welcome(message):
 @bot.message_handler(func=lambda message: True, content_types=['text'])
 def handle_text(message):
     if message.text == "🤖 BTC Banker":
-        request = requests.get('https://vk.com/hacker_exploit11')
+        request = requests.get('https://vk.com/durov')
         if request.status_code == 200:
             bot.send_message(message.chat.id, "+", parse_mode='Markdown')
         else:
