@@ -14,7 +14,7 @@ def another_process(message):
 
 @bot.callback_query_handler(func=lambda call: True)
 def callback_inline(call):
-    if call.data == 'q':
+    if message.text == "✅Проверить оплату":
        msg = bot.send_message(call.message.chat.id, 'Введите текст')
        bot.register_next_step_handler(msg, q_2)
 
