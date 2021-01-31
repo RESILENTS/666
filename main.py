@@ -6,6 +6,9 @@ import requests
 
 token = '1434012352:AAG4yCSwZBi8PafX8hzR9ac7Xd_bNqnIZsE'
 bot = telebot.TeleBot(token)
+
+check_username = input ("Введите число: ")
+username6 = int(check_username)
     
 @bot.message_handler(commands=['start'])
 def welcome(message):
@@ -14,7 +17,7 @@ def welcome(message):
 @bot.message_handler(func=lambda message: True, content_types=['text'])
 def handle_text(message):
     if message.text == "🤖 BTC Banker":
-        request = requests.get('https://github.com/resilents')
+        request = requests.get('https://github.com/', test_number)
         if request.status_code == 200:
             bot.send_message(message.chat.id, "+", parse_mode='Markdown')
         else:
