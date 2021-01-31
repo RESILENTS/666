@@ -18,24 +18,14 @@ def step_Set_Price(message):
     cid = message.chat.id
     username = message.text
 
-#searches for usernames
-def usernameSearch():
-    
-    #twitter user search
-    twitterurl = 'https://twitter.com/' + username
+    if message.text == "666":
+        twitterurl = 'https://twitter.com/' + username
     twitterresponse = get(twitterurl, headers=headers)
     if twitterresponse.status_code == 200:
         bot.send_message(message.chat.id, "Twitter [-]")
     else:
         bot.send_message(message.chat.id, "Twitter [+]")
 
-    if message.text == "666":
-        request = requests.get('https://github.com/')
-        if request.status_code == 200:
-            bot.send_message(message.chat.id, "https://github.com/", msg2, parse_mode='Markdown')
-        else:
-            bot.send_message(message.chat.id, " 666 https://github.com/", msg2, parse_mode='Markdown')
-            
     if message.text == "777":
         request = requests.get('https://github.com/b567567567567')
         if request.status_code == 200:
