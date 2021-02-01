@@ -2,7 +2,6 @@ import telebot
 from telebot import types
 import requests
 import time, os
-from bs4 import BeautifulSoup
 
 token = '1434012352:AAG4yCSwZBi8PafX8hzR9ac7Xd_bNqnIZsE'
 bot = telebot.TeleBot(token)
@@ -28,8 +27,7 @@ def usernameSearch(message):
     global username_check_a
     username_check_a = message.text.lower()
     
-    twitterurl = "https://imgur.com/user/" + username_check_a
-    page = requests.get(twitterurl) 
+    page = requests.get("https://imgur.com/user/" + username_check_a) 
     if page.status_code==200:
         bot.send_message(message.from_user.id, ' ❌ *Twitter:* https://imgur.com/user/' + username_check_a, parse_mode='Markdown')
     else:
