@@ -16,10 +16,10 @@ def start(message):
 
 @bot.message_handler(commands=['username_check'])
 def handle_text(message):
-        username_check = bot.send_message(message.from_user.id, '❗️ Введите ник пользователя без @:', reply_markup=service2)
+        username_check = bot.send_message(message.from_user.id, '❗️ Введите ник пользователя без @:')
         service2 = telebot.types.ReplyKeyboardMarkup(True)
         service2.row('🔎 Начать поиск')
-        bot.register_next_step_handler(username_check, get_car_model)
+        bot.register_next_step_handler(username_check, get_car_model, reply_markup=service2)
 
 def get_car_model(message):
     global username_check_a
