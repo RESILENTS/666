@@ -1,4 +1,5 @@
 from requests import get
+from classes import username_check_a7
 import time
 
 countNullResponse = 0
