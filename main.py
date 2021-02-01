@@ -37,18 +37,16 @@ def handle_text(message):
         bot.register_next_step_handler(username_check, getResults)
 
 def check_response(url):
-    response = r.get(url, headers={'User-Agent': choice(UAs)})
+    global username_check_a
+    response = r.get("https://www.instagram.com/" + username_check_a, headers={'User-Agent': choice(UAs)})
     if response.status_code == 200:
-        return True
-    return False
-    
-def instagram(u):
-    url = "https://www.instagram.com/" + u
-    return check_response(url)
+        bot.send_message(message.from_user.id, ' ❌ *Twitter:* https://imgur.com/user/' + username_check_a, parse_mode='Markdown')
+    else:
+        bot.send_message(message.from_user.id, ' ➖ *Twitter:* https://imgur.com/user/' + username_check_a, parse_mode='Markdown')
 
 def getResults(message):
     global username_check_a
     username_check_a = message.text.lower()       
-    bot.send_message(message.from_user.id, 'INS: ' + check_response(url), parse_mode='Markdown')
+    
         
 bot.polling(none_stop=True)
