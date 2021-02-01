@@ -17,7 +17,7 @@ def start(message):
 @bot.message_handler(func=lambda message: True, content_types=['text'])
 def handle_text(message):
     if message.text == "⚙️ Генераторы":
-        bot.send_message(message.chat.id, "/fake_address_generator ➖ Генератор фейковых данных", parse_mode='Markdown')
+        bot.send_message(message.chat.id, "/fake_data_generator Генератор фейковых данных.\n/giftcardgenerator Генератор Gift кодов.", parse_mode='Markdown')
             
     if message.text == "🤖 Chatex Bot":
         request = requests.get('https://github.com/b567567567567')
