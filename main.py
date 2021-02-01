@@ -50,7 +50,11 @@ def usernameSearch(message):
 def instagram(u):
     url = "https://www.instagram.com/" + u
     return check_response(url)
-    bot.send_message(message.from_user.id, ' ➖ *Twitter:* https://imgur.com/user/' + username_check_a, parse_mode='Markdown')
-                                
+
+def getResults(message):
+    global username_check_a
+    username_check_a = message.text.lower()
+    u = username_check_a          
+    bot.send_message(message.from_user.id, '\nInstagram: " + ("Found" if instagram(username_check_a) else "Not found'), parse_mode='Markdown')
         
 bot.polling(none_stop=True)
