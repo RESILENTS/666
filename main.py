@@ -25,6 +25,6 @@ def handle_text(message):
 def get_car_model(message):
     global car_model
     car_model = message.text.upper()
-    bot.send_message(message.from_user.id, '@username: ' + username_check_a')
+    bot.send_message(message.from_user.id, '@username: ' + username_check_a)
 
 bot.polling(none_stop=True)
