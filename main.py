@@ -6,31 +6,40 @@ import time
 token = '1434012352:AAG4yCSwZBi8PafX8hzR9ac7Xd_bNqnIZsE'
 bot = telebot.TeleBot(token)
 
+markup_menu = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True)
+btn_new = telebot.types.KeyboardButton('Запись нового авто')
+btn_verify = telebot.types.KeyboardButton('Проверка авто')
+markup_menu.add(btn_new, btn_verify)
+
+car_plate = ''
+car_make = ''
+car_model = ''
+
 @bot.message_handler(commands=['start'])
-def first_q(message):
-    send = bot.send_message(message.chat.id, 'первый вопрос', reply_markup=service)
-    bot.register_next_step_handler(send, two_q)
-
-
-def two_q(message):
-    global answers
-    answers = []
-    first_answer = message.text
-    answers.append(first_answer)
-
-    send = bot.send_message(message.chat.id, 'второй вопрос')
-    
-def end(message):
-    four_answer = message.text
-    answers.append(four_answer)
+def start(message: Message):
+    bot.send_message(message.from_user.id, 'Для начала нажмите необходимую кнопку', reply_markup=markup_menu)
 
 @bot.message_handler(content_types=['text'])
-def handle_text(message):
-    if message.text == "Check 1":
-        bot.send_message(message.chat.id, '{}'.format(''.join(answers)))
-        
-    if message.text == "🤖 Chatex Bot":
-        new_pas = "https://t.me/Chatex_bot?start=c_"
-        bot.send_message(message.chat.id, new_pas, disable_web_page_preview=True)
+def new_verify(message: Message):
+    if message.text.lower() == 'запись нового авто':
+        begin_new_car = bot.send_message(message.from_user.id, 'Введите регистрационный номер:')
+        bot.register_next_step_handler(begin_new_car, get_car_plate)
+
+def get_car_plate(message: Message):
+    global car_plate
+    car_plate = message.text.upper()
+    bot.send_message(message.from_user.id, 'Введите марку авто:')
+    bot.register_next_step_handler(message, get_car_make)
+
+def get_car_make(message: Message):
+    global car_make
+    car_make = message.text.upper()
+    bot.send_message(message.from_user.id, 'Введите модель авто:')
+    bot.register_next_step_handler(message, get_car_model)
+
+def get_car_model(message: Message):
+    global car_model
+    car_model = message.text.upper()
+    bot.send_message(message.from_user.id, '1:' + car_plate + '2: ' + car_make + '3: ' + car_model)
 
 bot.polling(none_stop=True)
