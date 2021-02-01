@@ -4,8 +4,6 @@ import time
 from username_check import usernameSearch
 from classes import username_check_a7
 
-response, isGetData = Request(query)
-
 token = '1434012352:AAG4yCSwZBi8PafX8hzR9ac7Xd_bNqnIZsE'
 bot = telebot.TeleBot(token)
 
