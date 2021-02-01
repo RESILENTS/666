@@ -49,6 +49,6 @@ def instagram(u):
 def getResults(message):
     global username_check_a
     username_check_a = message.text.lower()       
-    bot.send_message(message.from_user.id, '\nInstagram: ' + ('Found' if instagram(username_check_a) else 'Not found'), parse_mode='Markdown')
+    bot.send_message(message.from_user.id, 'INS: ' + check_response(url), parse_mode='Markdown')
         
 bot.polling(none_stop=True)
