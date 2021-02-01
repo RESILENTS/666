@@ -2,14 +2,6 @@ from requests import get
 from classes import username_check_a7
 import time
 
-countNullResponse = 0
-
-def Request(query):
-    global username_check_a
-    result = Connect(query)
-    username_check_a += 1
-    return username_check_a, result
-
 def usernameSearch(self): 
     global username_check_a
     
