@@ -3,7 +3,6 @@ from telebot import types
 import random
 import time
 import string
-import Functions
 
 token = '1434012352:AAG4yCSwZBi8PafX8hzR9ac7Xd_bNqnIZsE'
 bot = telebot.TeleBot(token)
@@ -17,11 +16,11 @@ def selfmyself(message):
 @bot.message_handler(content_types=['text'])
 def handle_text(message):
     if message.text == "🤖 BTC Banker":
-        new_pas = "https://t.me/BTC_CHANGE_BOT?start=с_" + Functions.btc_banker()
+        new_pas = "https://t.me/BTC_CHANGE_BOT?start=с_"
         bot.send_message(message.chat.id, new_pas, disable_web_page_preview=True)
         
     if message.text == "🤖 Chatex Bot":
-        new_pas = "https://t.me/Chatex_bot?start=c_" + Functions.chatex()
+        new_pas = "https://t.me/Chatex_bot?start=c_"
         bot.send_message(message.chat.id, new_pas, disable_web_page_preview=True)
 
 bot.polling(none_stop=True)
