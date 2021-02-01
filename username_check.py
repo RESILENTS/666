@@ -1,7 +1,7 @@
 from requests import get
 import time
 
-def usernameSearch(): 
+def usernameSearch(self): 
     twitterurl = 'https://twitter.com/' + username_check_a
     twitterresponse = get(twitterurl, headers=headers)
     if twitterresponse.status_code == 200:
