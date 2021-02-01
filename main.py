@@ -11,7 +11,11 @@ bot = telebot.TeleBot(token)
 def selfmyself(message):
     service = telebot.types.ReplyKeyboardMarkup(True)
     service.row('🤖 Chatex Bot', '🤖 BTC Banker')
-    bot.send_message(message.from_user.id, 'Что будем делать? <b>RES</b>', reply_markup=service, parse_mode='HTML')
+    
+    message = bot.send_message(message.chat.id, "Введите ссылку на товар", disable_notification=True, reply_markup=service)
+    url = message.text
+    constants.items.append(url)
+    bot.register_next_step_handler(message, another_process)
 
 @bot.message_handler(content_types=['text'])
 def handle_text(message):
