@@ -18,7 +18,7 @@ def start(message):
 def handle_text(message):
         service2 = telebot.types.ReplyKeyboardMarkup(True)
         service2.row('🔎 Начать поиск')
-        bot.send_message(message.from_user.id, '❗️ Введите ник пользователя без @:', reply_markup=service2)
+        username_check = bot.send_message(message.from_user.id, '❗️ Введите ник пользователя без @:', reply_markup=service2)
         bot.register_next_step_handler(username_check, get_car_model)
 
 def get_car_model(message):
