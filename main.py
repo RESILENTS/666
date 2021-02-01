@@ -1,11 +1,15 @@
 import telebot, requests
 from telebot import types
 import time
+from fake_useragent import UserAgent
+
+ua = UserAgent()
+headers = {'User-Agent': ua.random}
+response = requests.get(url, headers=headers)
 
 token = '1434012352:AAG4yCSwZBi8PafX8hzR9ac7Xd_bNqnIZsE'
 bot = telebot.TeleBot(token)
 
-headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:64.0) Gecko/20100101 Firefox/64.0'}
 username_check_a = ''
 
 @bot.message_handler(commands=['start'])
@@ -24,13 +28,13 @@ def handle_text(message):
 
 def usernameSearch(message):
     global username_check_a
-    username_check_a = message.text.upper()
-    url = "http://www.jeuxvideo.com/profil/" + username_check_a
-    r = requests.get(url,headers=headers)
-    re = str(r.status_code)
-    if "404" in re:
-        pass
-    elif "200" in re:
+    username_check_a = message.text.lower()
+    
+    twitterurl = 'https://imgur.com/user/' + username_check_a
+    twitterresponse = get(twitterurl, headers=headers)
+    if twitterresponse.status_code == 200:
+        bot.send_message(message.from_user.id, ' ❌ *Twitter:* https://imgur.com/user/' + username_check_a, parse_mode='Markdown')
+    else:
         bot.send_message(message.from_user.id, ' ➖ *Twitter:* https://imgur.com/user/' + username_check_a, parse_mode='Markdown')
                                 
         
