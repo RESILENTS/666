@@ -23,7 +23,7 @@ def handle_text(message):
         bot.register_next_step_handler(username_check, get_car_model)
 
 def get_car_model(message):
-    global car_model
+    global username_check_a
     car_model = message.text.upper()
     bot.send_message(message.from_user.id, '@username: ' + username_check_a)
 
