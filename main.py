@@ -2,7 +2,6 @@ import telebot
 from telebot import types
 import time
 from username_check import usernameSearch
-from GetResponse import *
 
 response, isGetData = Request(query)
 
