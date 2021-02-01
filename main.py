@@ -1,8 +1,10 @@
 import telebot 
 from telebot import types
-import random
 import time
 from username_check import usernameSearch
+from GetResponse import *
+
+response, isGetData = Request(query)
 
 token = '1434012352:AAG4yCSwZBi8PafX8hzR9ac7Xd_bNqnIZsE'
 bot = telebot.TeleBot(token)
