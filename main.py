@@ -23,7 +23,7 @@ def handle_text(message):
         username_check = bot.send_message(message.from_user.id, '❗️ Введите ник пользователя без @:', reply_markup=service2)
         bot.register_next_step_handler(username_check, usernameSearch)
 
-def usernameSearch():
+def usernameSearch(self):
     global username_check_a
     username_check_a = message.text.upper()
     url = "http://www.jeuxvideo.com/profil/" + username_check_a
