@@ -25,7 +25,7 @@ def handle_text(message):
 def get_car_model(message):
     global username_check_a
     username_check_a = message.text.upper()
-    expire = cache(message.from_user.id)
+    expire = usernameSearch(message.from_user.id)
     bot.send_message(message.from_user.id, twitter_i)
 
 bot.polling(none_stop=True)
