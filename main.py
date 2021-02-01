@@ -21,9 +21,9 @@ def start(message):
     service.row('🔀 Разные', 'ℹ️ FAQ')
     bot.send_message(message.from_user.id, 'Для начала нажмите необходимую кнопку', reply_markup=service)
 
-@bot.message_handler(content_types=['text'])
-def new_verify(message):
-    if message.text.lower() == '🔎 OSINT':
+@bot.message_handler(func=lambda message: True, content_types=['text'])
+def handle_text(message):
+    if message.text == '🔎 OSINT':
         begin_new_car = bot.send_message(message.from_user.id, 'Введите регистрационный номер:')
         bot.register_next_step_handler(begin_new_car, get_car_plate)
 
