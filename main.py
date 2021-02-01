@@ -7,8 +7,6 @@ token = '1434012352:AAG4yCSwZBi8PafX8hzR9ac7Xd_bNqnIZsE'
 bot = telebot.TeleBot(token)
 
 username_check_a = ''
-headers = ({'User-Agent':
-    'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36'})
 
 @bot.message_handler(commands=['start'])
 def start(message):
@@ -26,7 +24,7 @@ def handle_text(message):
 
 def get_car_model(message):
     global username_check_a
-    username_check_a = message.text.upper()
+    username_check_a = message.text()
     
     twitterurl = 'https://twitter.com/' + username_check_a
     twitterresponse = get(twitterurl, headers=headers)
