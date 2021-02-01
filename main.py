@@ -1,11 +1,14 @@
 import telebot 
 from telebot import types
+from requests import get
 import time
 
 token = '1434012352:AAG4yCSwZBi8PafX8hzR9ac7Xd_bNqnIZsE'
 bot = telebot.TeleBot(token)
 
 username_check_a = ''
+headers = ({'User-Agent':
+    'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36'})
 
 @bot.message_handler(commands=['start'])
 def start(message):
