@@ -22,12 +22,6 @@ UAs = [  # user agents
 ]
 username_check_a = ''
 
-def check_response(url):
-    response = r.get(url, headers={'User-Agent': choice(UAs)})
-    if response.status_code == 200:
-        return True
-    return False
-
 @bot.message_handler(commands=['start'])
 def start(message):
     service = telebot.types.ReplyKeyboardMarkup(True)
@@ -40,21 +34,21 @@ def handle_text(message):
         service2 = telebot.types.ReplyKeyboardMarkup(True)
         service2.row('🔎 Начать поиск')
         username_check = bot.send_message(message.from_user.id, '❗️ Введите ник пользователя без @:', reply_markup=service2)
-        bot.register_next_step_handler(username_check, usernameSearch)
+        bot.register_next_step_handler(username_check, check_response)
 
-def usernameSearch(message):
-    global username_check_a
-    username_check_a = message.text.lower()
-    u = username_check_a
+def check_response(url):
+    response = r.get(url, headers={'User-Agent': choice(UAs)})
+    if response.status_code == 200:
+        return True
+    return False
     
-def instagram(u):
-    url = "https://www.instagram.com/" + u
+def instagram(username_check_a):
+    url = "https://www.instagram.com/" + username_check_a
     return check_response(url)
 
 def getResults(message):
     global username_check_a
-    username_check_a = message.text.lower()
-    u = username_check_a          
+    username_check_a = message.text.lower()       
     bot.send_message(message.from_user.id, '\nInstagram: ' + ('Found' if instagram(username_check_a) else 'Not found'), parse_mode='Markdown')
         
 bot.polling(none_stop=True)
