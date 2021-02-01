@@ -27,7 +27,7 @@ def usernameSearch(message):
     global username_check_a
     username_check_a = message.text.lower()
     
-    page = requests.get("https://imgur.com/user/" + username_check_a) 
+    page = requests.get("https://imgur.com/user/", username_check_a) 
     if page.status_code==200:
         bot.send_message(message.from_user.id, ' ❌ *Twitter:* https://imgur.com/user/' + username_check_a, parse_mode='Markdown')
     else:
