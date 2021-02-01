@@ -2,7 +2,7 @@ import telebot
 from telebot import types
 import random
 import time
-import username_check
+from username_check import usernameSearch
 
 token = '1434012352:AAG4yCSwZBi8PafX8hzR9ac7Xd_bNqnIZsE'
 bot = telebot.TeleBot(token)
