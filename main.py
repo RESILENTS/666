@@ -19,7 +19,8 @@ def handle_text(message):
         username_check = bot.send_message(message.from_user.id, '❗️ Введите ник пользователя без @:')
         service2 = telebot.types.ReplyKeyboardMarkup(True)
         service2.row('🔎 Начать поиск')
-        bot.register_next_step_handler(username_check, get_car_model, reply_markup=service2)
+        bot.send_message(message.from_user.id, reply_markup=service2)
+        bot.register_next_step_handler(username_check, get_car_model)
 
 def get_car_model(message):
     global username_check_a
