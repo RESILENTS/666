@@ -5,8 +5,11 @@ import time
 token = "1434012352:AAG4yCSwZBi8PafX8hzR9ac7Xd_bNqnIZsE"
 bot = telebot.TeleBot(token)
 
+
+
 @bot.message_handler(commands=['start'])
-def handle_start(message):
+def handle_text (message):
+    bot.send_message(message.chat.id, "Введите данные")
     message = bot.send_message(message.chat.id, "Введите ссылку на товар", disable_notification=True)
     url = message.text
     constants.items.append(url)
