@@ -24,7 +24,7 @@ def handle_text(message):
 
 def get_car_model(message):
     global username_check_a
-    username_check_a = message.text()
+    username_check_a = message.text.lower()
     
     twitterurl = 'https://twitter.com/' + username_check_a
     twitterresponse = get(twitterurl, headers=headers)
