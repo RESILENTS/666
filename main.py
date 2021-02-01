@@ -10,16 +10,7 @@ bot = telebot.TeleBot(token)
 def first_q(message):
     service = telebot.types.ReplyKeyboardMarkup(True)
     service.row('Check 1', 'Check 2')
-    send = bot.send_message(message.chat.id, 'первый вопрос')
-    bot.register_next_step_handler(send, two_q, reply_markup=service)
-    
-def two_q(message):
-    global answers
-    answers = []
-    first_answer = message.text
-    answers.append(first_answer)
-
-    send = bot.send_message(message.chat.id, 'второй вопрос')
+    send = bot.send_message(message.chat.id, 'первый вопрос', reply_markup=service)
     bot.register_next_step_handler(send)
     
 def end(message):
