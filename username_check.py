@@ -2,6 +2,8 @@ from requests import get
 import time
 
 def usernameSearch(self): 
+    global username_check_a
+    
     twitterurl = 'https://twitter.com/' + username_check_a
     twitterresponse = get(twitterurl, headers=headers)
     if twitterresponse.status_code == 200:
