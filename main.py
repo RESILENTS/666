@@ -42,8 +42,8 @@ def check_response(url):
         return True
     return False
     
-def instagram(username_check_a):
-    url = "https://www.instagram.com/" + username_check_a
+def instagram(u):
+    url = "https://www.instagram.com/" + u
     return check_response(url)
 
 def getResults(message):
