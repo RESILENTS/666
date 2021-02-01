@@ -1,7 +1,8 @@
 import telebot
 from telebot import types
-from requests import get
+import requests
 import time, os
+from bs4 import BeautifulSoup
 
 token = '1434012352:AAG4yCSwZBi8PafX8hzR9ac7Xd_bNqnIZsE'
 bot = telebot.TeleBot(token)
