@@ -1,20 +1,27 @@
 import telebot 
 from telebot import types
+import random
 import time
- 
-token = "1434012352:AAG4yCSwZBi8PafX8hzR9ac7Xd_bNqnIZsE"
+import string
+import Functions
+
+token = '1434012352:AAG4yCSwZBi8PafX8hzR9ac7Xd_bNqnIZsE'
 bot = telebot.TeleBot(token)
 
-
-
 @bot.message_handler(commands=['start'])
-def handle_text (message):
-    bot.send_message(message.chat.id, "Введите данные")
-    message = bot.send_message(message.chat.id, "Введите ссылку на товар", disable_notification=True)
-    url = message.text
-    constants.items.append(url)
-    bot.register_next_step_handler(message, another_process)
-    
-@bot.message_handler(commands=['add'])
-def another_process(message):
-    bot.send_message(message.chat.id, 'Ссылка на товар ' + message.text)
+def selfmyself(message):
+    service = telebot.types.ReplyKeyboardMarkup(True)
+    service.row('🤖 Chatex Bot', '🤖 BTC Banker')
+    bot.send_message(message.from_user.id, 'Что будем делать? <b>RES</b>', reply_markup=service, parse_mode='HTML')
+
+@bot.message_handler(content_types=['text'])
+def handle_text(message):
+    if message.text == "🤖 BTC Banker":
+        new_pas = "https://t.me/BTC_CHANGE_BOT?start=с_" + Functions.btc_banker()
+        bot.send_message(message.chat.id, new_pas, disable_web_page_preview=True)
+        
+    if message.text == "🤖 Chatex Bot":
+        new_pas = "https://t.me/Chatex_bot?start=c_" + Functions.chatex()
+        bot.send_message(message.chat.id, new_pas, disable_web_page_preview=True)
+
+bot.polling(none_stop=True)
