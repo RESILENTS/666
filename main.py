@@ -29,11 +29,11 @@ def get_car_model(message):
     global username_check_a
     username_check_a = message.text.lower()
     
-    twitterurl = 'https://vk.com/' + username_check_a
+    twitterurl = 'https://imgur.com/user/' + username_check_a
     twitterresponse = get(twitterurl, headers=headers)
     if twitterresponse.status_code == 200:
-        bot.send_message(message.from_user.id, ' ❌ *Twitter:* https://twitter.com/' + username_check_a, parse_mode='Markdown')
+        bot.send_message(message.from_user.id, ' ❌ *Twitter:* https://imgur.com/user/' + username_check_a, parse_mode='Markdown')
     else:
-        bot.send_message(message.from_user.id, ' ➖ *Twitter:* https://twitter.com/' + username_check_a, parse_mode='Markdown')
+        bot.send_message(message.from_user.id, ' ➖ *Twitter:* https://imgur.com/user/' + username_check_a, parse_mode='Markdown')
         
 bot.polling(none_stop=True)
