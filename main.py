@@ -6,9 +6,7 @@ import time
 token = '1434012352:AAG4yCSwZBi8PafX8hzR9ac7Xd_bNqnIZsE'
 bot = telebot.TeleBot(token)
 
-headers = ({'User-Agent':
-    'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36'})
-
+headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:64.0) Gecko/20100101 Firefox/64.0'}
 username_check_a = ''
 
 @bot.message_handler(commands=['start'])
@@ -23,17 +21,25 @@ def handle_text(message):
         service2 = telebot.types.ReplyKeyboardMarkup(True)
         service2.row('🔎 Начать поиск')
         username_check = bot.send_message(message.from_user.id, '❗️ Введите ник пользователя без @:', reply_markup=service2)
-        bot.register_next_step_handler(username_check, get_car_model)
+        bot.register_next_step_handler(username_check, usrchk)
 
-def get_car_model(message):
+def usrchk(usernamee):
     global username_check_a
     username_check_a = message.text.lower()
-    
-    twitterurl = 'https://imgur.com/user/' + username_check_a
-    twitterresponse = get(twitterurl, headers=headers)
-    if twitterresponse.status_code == 200:
-        bot.send_message(message.from_user.id, ' ❌ *Twitter:* https://imgur.com/user/' + username_check_a, parse_mode='Markdown')
-    else:
-        bot.send_message(message.from_user.id, ' ➖ *Twitter:* https://imgur.com/user/' + username_check_a, parse_mode='Markdown')
+                            try:
+                                url = f"http://www.jeuxvideo.com/profil/{usernamee}"
+                                r = requests.get(url,headers=headers)
+                                re = str(r.status_code)
+                                if "404" in re:
+                                    pass
+                                elif "200" in re:
+                                    bot.send_message(message.from_user.id, ' ➖ *Twitter:* https://imgur.com/user/' + username_check_a, parse_mode='Markdown')
+                            try:
+                                
+def user_actions():
+    u = input("Username : ")
+    usrchk(usernamee=u)
+    user_actions()
+user_actions()
         
 bot.polling(none_stop=True)
