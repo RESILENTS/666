@@ -11,7 +11,6 @@ def first_q(message):
     service = telebot.types.ReplyKeyboardMarkup(True)
     service.row('Check 1', 'Check 2')
     send = bot.send_message(message.chat.id, 'первый вопрос', reply_markup=service)
-    bot.register_next_step_handler(send)
     
 def end(message):
     four_answer = message.text
