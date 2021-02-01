@@ -38,15 +38,15 @@ def handle_text(message):
 
 def check_response(url):
     global username_check_a
-    response = r.get("https://www.instagram.com/" + username_check_a, headers={'User-Agent': choice(UAs)})
+    response = get("https://www.instagram.com/" + username_check_a, headers={'User-Agent': choice(UAs)})
     if response.status_code == 200:
-        bot.send_message(message.from_user.id, ' ❌ *Twitter:* https://imgur.com/user/' + username_check_a, parse_mode='Markdown')
+        instago = bot.send_message(message.from_user.id, ' ❌ *Twitter:* https://imgur.com/user/' + username_check_a, parse_mode='Markdown')
     else:
-        bot.send_message(message.from_user.id, ' ➖ *Twitter:* https://imgur.com/user/' + username_check_a, parse_mode='Markdown')
+        instago = bot.send_message(message.from_user.id, ' ➖ *Twitter:* https://imgur.com/user/' + username_check_a, parse_mode='Markdown')
 
 def getResults(message):
     global username_check_a
     username_check_a = message.text.lower()       
-    
+        bot.send_message(message.from_user.id, "666", instago, parse_mode='Markdown')
         
 bot.polling(none_stop=True)
