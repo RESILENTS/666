@@ -8,4 +8,4 @@ def usernameSearch():
     if twitterresponse.status_code == 200:
         
     else:
-        bot.send_message(message.from_user.id, ' ➖ *Twitter:* https://twitter.com/' + username_check_a, parse_mode='Markdown')
+        twitter_i = bot.send_message(message.from_user.id, ' ➖ *Twitter:* https://twitter.com/' + username_check_a, parse_mode='Markdown')
