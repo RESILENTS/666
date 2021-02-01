@@ -12,12 +12,13 @@ btn_verify = telebot.types.KeyboardButton('Проверка авто')
 markup_menu.add(btn_new, btn_verify)
 
 car_plate = ''
-car_make = ''
-car_model = ''
 
 @bot.message_handler(commands=['start'])
 def start(message):
-    bot.send_message(message.from_user.id, 'Для начала нажмите необходимую кнопку', reply_markup=markup_menu)
+    service = telebot.types.ReplyKeyboardMarkup(True)
+    service.row('🔎 OSINT', '⚙️ Генераторы')
+    service.row('🔀 Разные', 'ℹ️ FAQ')
+    bot.send_message(message.from_user.id, 'Для начала нажмите необходимую кнопку', reply_markup=service)
 
 @bot.message_handler(content_types=['text'])
 def new_verify(message):
