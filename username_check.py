@@ -1,7 +1,6 @@
 import telebot 
 from telebot import types
 import time
-from username_check import usernameSearch
 from classes import username_check_a7
 
 username_check_a = ''
