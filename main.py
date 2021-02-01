@@ -23,8 +23,9 @@ def handle_text(message):
         bot.register_next_step_handler(username_check, get_car_model)
 
 def get_car_model(message):
-    global username_check_a
-    username_check_a = message.text.upper()
-    bot.send_message(message.from_user.id, '@username: ' + username_check_a)
+    expire = cache(message.from_user.id)
+        global username_check_a
+        username_check_a = message.text()
+        bot.send_message(message.from_user.id, twitter_i)
 
 bot.polling(none_stop=True)
