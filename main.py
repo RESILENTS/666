@@ -2,6 +2,7 @@ import telebot
 from telebot import types
 import random
 import time
+import username_check
 
 token = '1434012352:AAG4yCSwZBi8PafX8hzR9ac7Xd_bNqnIZsE'
 bot = telebot.TeleBot(token)
@@ -22,7 +23,7 @@ def start(message):
 
 @bot.message_handler(content_types=['text'])
 def new_verify(message):
-    if message.text.lower() == 'запись нового авто':
+    if message.text.lower() == '🔎 OSINT':
         begin_new_car = bot.send_message(message.from_user.id, 'Введите регистрационный номер:')
         bot.register_next_step_handler(begin_new_car, get_car_plate)
 
