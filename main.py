@@ -21,12 +21,12 @@ def handle_text(message):
         service2 = telebot.types.ReplyKeyboardMarkup(True)
         service2.row('🔎 Начать поиск')
         username_check = bot.send_message(message.from_user.id, '❗️ Введите ник пользователя без @:', reply_markup=service2)
-        bot.register_next_step_handler(username_check, usrchk)
+        bot.register_next_step_handler(username_check, usernameSearch)
 
-def usrchk(usernamee):
+def usernameSearch():
     global username_check_a
-    username_check_a = message.text.lower()
-    url = "http://www.jeuxvideo.com/profil/{usernamee}"
+    username_check_a = message.text.upper()
+    url = "http://www.jeuxvideo.com/profil/" + username_check_a
     r = requests.get(url,headers=headers)
     re = str(r.status_code)
     if "404" in re:
@@ -34,10 +34,5 @@ def usrchk(usernamee):
     elif "200" in re:
         bot.send_message(message.from_user.id, ' ➖ *Twitter:* https://imgur.com/user/' + username_check_a, parse_mode='Markdown')
                                 
-def user_actions():
-    u = input("Username : ")
-    usrchk(usernamee=u)
-    user_actions()
-user_actions()
         
 bot.polling(none_stop=True)
