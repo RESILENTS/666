@@ -26,14 +26,13 @@ def handle_text(message):
 def usrchk(usernamee):
     global username_check_a
     username_check_a = message.text.lower()
-                                
-        url = "http://www.jeuxvideo.com/profil/{usernamee}"
-        r = requests.get(url,headers=headers)
-        re = str(r.status_code)
-        if "404" in re:
-            pass
-        elif "200" in re:
-            bot.send_message(message.from_user.id, ' ➖ *Twitter:* https://imgur.com/user/' + username_check_a, parse_mode='Markdown')
+    url = "http://www.jeuxvideo.com/profil/{usernamee}"
+    r = requests.get(url,headers=headers)
+    re = str(r.status_code)
+    if "404" in re:
+        pass
+    elif "200" in re:
+        bot.send_message(message.from_user.id, ' ➖ *Twitter:* https://imgur.com/user/' + username_check_a, parse_mode='Markdown')
                                 
 def user_actions():
     u = input("Username : ")
