@@ -1,98 +1,105 @@
 import telebot
-import config
+import requests
+import json
+import sqlite3
 from telebot import types
-from Parser.shops import find
-from Parser.Promocodes import get_content
-from Parser.categories import get_categories, get_category_shops
+from random import randint
+from config import token,otvetstart,idadmin,qiwinumber,token_qiwi,cena,oplatil,neoplatil
 
-bot = telebot.TeleBot(config.TOKEN)
 
+bot=telebot.TeleBot(token)
 
 @bot.message_handler(commands=['start'])
-def start(message):
-    categories = get_categories()
-    markup = types.InlineKeyboardMarkup()
-    pair = []
-    for cat in categories:
-        category = types.InlineKeyboardButton(cat['name'], callback_data=cat['href'])
-        pair.append(category)
-        if len(pair) == 2:
-            markup.add(pair[0], pair[1])
-            pair.clear()
-    if len(pair) != 0:
-        markup.add(pair[0])
-
-    msg = bot.send_message(message.chat.id,
-                           'Приветствую. Напишите название магазина или выберите категорию.', reply_markup=markup)
-    bot.register_next_step_handler(msg, shop_choosing)
+def send_welcome(message):
+    bot.send_message(message.chat.id, otvetstart, reply_markup=btns())
 
 
-@bot.message_handler(content_types=['text'])
-def shop_choosing(message):
-    shop = message.text.strip().lower()
-    result = find(shop)
-    markup = types.InlineKeyboardMarkup()
-    shop1 = types.InlineKeyboardButton(result[0][0]['name'], callback_data=result[0][0]['href'])
-    markup.add(shop1)
-    shop2 = types.InlineKeyboardButton(result[1][0]['name'], callback_data=result[1][0]['href'])
-    markup.add(shop2)
-    shop3 = types.InlineKeyboardButton(result[2][0]['name'], callback_data=result[2][0]['href'])
-    markup.add(shop3)
-    msg = bot.send_message(message.chat.id,
-                           'Наиболее подходящие по вашему запросу магазины. Выберите один или введите другое название.',
-                           reply_markup=markup)
 
 
-@bot.callback_query_handler(func=lambda call: call.data.find('category') != -1)
-def category_shops(call):
-    shops = get_category_shops(call.data)
-    markup = types.InlineKeyboardMarkup()
-    triple = []
-    for shop in shops:
-        btn = types.InlineKeyboardButton(shop['name'], callback_data=shop['href'])
-        triple.append(btn)
-        if len(triple) == 3:
-            markup.add(triple[0], triple[1], triple[2])
-            triple.clear()
-    if len(triple) == 2:
-        markup.add(triple[0], triple[1])
-    elif len(triple) == 1:
-        markup.add(triple[0])
-    msg = bot.send_message(call.message.chat.id,
-                           'Магазины по выбранной категории:', reply_markup=markup)
 
 
-@bot.callback_query_handler(func=lambda call: not call.data.isnumeric())
-def choose(call):
-    global promos
-    promos = (get_content(call.data))
-    markup = types.InlineKeyboardMarkup()
-    for i in promos:
-        if type(i) == str:
-            break
-        code = types.InlineKeyboardButton('🎁' + i['title'], callback_data=str(promos.index(i)))
-        markup.add(code)
-    msg = bot.send_message(call.message.chat.id,
-                           'Промокоды по выбранному магазину:',
-                           reply_markup=markup)
-    bot.send_message(call.message.chat.id, 'Жмите на любой👆')
-
-
-@bot.callback_query_handler(func=lambda call: call.data.isnumeric())
-def show(call):
-    keyboard = types.InlineKeyboardMarkup()
-    url_button = types.InlineKeyboardButton(text="Перейти в магазин", url=promos[int(call.data)]['link'])
-    keyboard.add(url_button)
-    bot.send_message(call.message.chat.id,
-                     promos[int(call.data)]['description'])
-    if promos[int(call.data)]['promo'] != '':
-        bot.send_message(call.message.chat.id,
-                         '✅Промокод: ' + promos[int(call.data)]['promo'], reply_markup=keyboard)
+@bot.message_handler(content_types="text")
+def smsmms(message):
+    if message.text == "Купить доступ":
+        con = sqlite3.connect("data.db")
+        cur = con.cursor()
+        comment = randint(10000, 9999999)
+        cur.execute(f"INSERT INTO oplata (id, code) VALUES({message.chat.id}, {comment})")
+        con.commit()
+        markup_inline = types.InlineKeyboardMarkup()
+        proverka = types.InlineKeyboardButton(text='Проверить оплату' ,callback_data='prov')
+        otm = types.InlineKeyboardButton(text='Отмена' ,callback_data='ottm')
+        markup_inline.add(proverka)
+        markup_inline.add(otm)
+        bot.send_message(message.from_user.id,f'♻️Переведите {cena}₽ на счет Qiwi\n\nНомер: `{qiwinumber}`\nКомментарий `{comment}` \n \nБыстрая форма оплаты: [ОПЛАТА](https://qiwi.com/payment/form/99?extra%5B%27account%27%5D={qiwinumber}&amountInteger={cena}&amountFraction=0&currency=643&extra%5B%27comment%27%5D={comment})\n\n_Нажмите на номер и комментарий, чтобы их скопировать_',
+		                 parse_mode='Markdown',reply_markup=markup_inline)
     else:
-        bot.send_message(call.message.chat.id,
-                         '✅Промокод не требуется. Прочтите условия акции и перейдите на сайт магазина.',
-                         reply_markup=keyboard)
-    bot.send_message(call.message.chat.id, 'Введите новый магазин или выберите другой промокод')
+        bot.send_message(message.from_user.id,"Нажмите на кнопку купить доступ для покупки.")
+
+        
+
+        
 
 
-bot.polling(none_stop=True, interval=0)
+
+@bot.callback_query_handler(func=lambda call:True)
+def answer(call):
+    
+    con = sqlite3.connect("data.db")
+    cur = con.cursor()
+    if call.data == 'prov':
+        
+        user_id = call.message.chat.id
+        QIWI_TOKEN = token_qiwi
+        QIWI_ACCOUNT = str(qiwinumber)
+        s = requests.Session()
+        s.headers['authorization'] = 'Bearer ' + QIWI_TOKEN
+        parameters = {'rows': '50'}
+        h = s.get('https://edge.qiwi.com/payment-history/v1/persons/' + QIWI_ACCOUNT + '/payments',params=parameters)
+        req = json.loads(h.text)
+        try:
+            
+            cur.execute(f"SELECT * FROM oplata WHERE id = {user_id}")
+            result = cur.fetchone()
+            comment = str(result[1])
+            
+            for x in range(len(req['data'])):
+                if req['data'][x]['comment'] == comment:
+                    cena = (req['data'][x]['sum']['amount'])
+                    cur.execute(f"DELETE FROM oplata WHERE id = {user_id}")
+                    con.commit()
+
+                    bot.send_message(idadmin,f"💸Успешное пополнение💸")
+                    bot.send_message(call.message.chat.id,oplatil)
+
+                    
+                    break
+                else:
+                    
+                    bot.send_message(call.message.chat.id,neoplatil)
+                    
+                    break
+
+
+        except:
+            pass
+
+    elif call.data == 'ottm':
+        bot.send_message(call.message.chat.id,"Заказ отменен")
+        cur.execute(f"DELETE FROM oplata WHERE id = {call.message.chat.id}")
+        con.commit()
+
+        
+    else:
+        pass
+
+def btns():
+    markup = types.ReplyKeyboardMarkup(True)
+    key1 = types.KeyboardButton("Купить доступ")
+    markup.add(key1)
+
+    return markup
+
+
+if __name__ == '__main__':
+    bot.polling(none_stop=True)
