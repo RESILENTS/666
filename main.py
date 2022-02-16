@@ -4,8 +4,6 @@ import time, os
 import requests as r
 from random import choice
 
-bot.remove_webhook()
-
 token = '5108669453:AAGuW4xE9QjnzHH27YRb_6xsZ5-NGuqpgjQ'
 bot = telebot.TeleBot(token)
 
