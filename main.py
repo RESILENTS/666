@@ -4,7 +4,7 @@ import time, os
 import requests as r
 from random import choice
 
-token = '1434012352:AAG4yCSwZBi8PafX8hzR9ac7Xd_bNqnIZsE'
+token = '1697698490:AAH0WAjuyAg1TNn12ty1qppRHNX5e4cWP9o'
 bot = telebot.TeleBot(token)
 
 @bot.message_handler(commands=['start'])
