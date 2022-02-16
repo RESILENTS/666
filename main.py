@@ -14,25 +14,6 @@ chat_ids_file = 'chat_ids.txt'
 block_list = 'block_list.txt'
 
 
-
-keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
-boom = types.KeyboardButton(text='🔥💣БОМБЕР')
-titan = types.KeyboardButton(text='👅💦Титан-ГЕЛЬ')
-stop = types.KeyboardButton(text='⛔️STOP')
-info = types.KeyboardButton(text='ℹ️Информация')
-stats = types.KeyboardButton(text='📈Статистика')
-donat = types.KeyboardButton(text='💰Поддержать')
-piar = types.KeyboardButton(text='💸 Реклама')
-spons = types.KeyboardButton(text='🤝Наш партнер')
-
-buttons_to_add = [boom, titan, stop, info, stats, donat, piar, spons]
-
-keyboard.add(*buttons_to_add)
-
-
-
-
-
 @bot.message_handler(commands=['start'])
 def start(message):
 
