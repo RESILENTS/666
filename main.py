@@ -1,6 +1,5 @@
-
- ​import​ ​telebot 
- ​from​ ​telebot​ ​import​ ​types 
+import​ ​telebot 
+from​ ​telebot​ ​import​ ​types 
   
  ​bot​ ​=​ ​telebot​.​TeleBot​(​'5108669453:AAGuW4xE9QjnzHH27YRb_6xsZ5-NGuqpgjQ'​) 
   
