@@ -8,5 +8,3 @@ bot = telebot.TeleBot(token)
 @bot.message_handler(commands=['start'])
 def handle_text(message):
     bot.send_message(message.chat.chat_id, "Welcome! Let start, use command /help to see my functional.")
-
-​bot​.​polling​()
