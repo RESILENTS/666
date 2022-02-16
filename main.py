@@ -1,270 +1,338 @@
-from​  ​config​ ​import​
-​from​  ​keyboard​ ​import​
-  
- ​@​bot​.​message_handler​(​commands​=​[​'start'​]) 
- ​def​ ​start​(​message​): 
- ​    ​chat_id​ ​=​ ​message​.​from_user​.​id 
- ​    ​username​ ​=​ ​message​.​from_user​.​username 
- ​    ​with​ ​sqlite3​.​connect​(​'users.db'​) ​as​ ​conn​: 
- ​        ​cur​ ​=​ ​conn​.​cursor​() 
- ​        ​cur​.​execute​(​"""CREATE TABLE IF NOT EXISTS user(username TEXT, user_id INTEGER);"""​) 
- ​        ​cur​.​execute​(​"SELECT * FROM user WHERE `user_id` = '{}'"​.​format​(​chat_id​)) 
- ​        ​row​ ​=​ ​cur​.​fetchall​() 
- ​        ​if​ ​len​(​row​) ​==​ ​0​: 
- ​            ​cur​.​execute​(​"INSERT INTO `user` (`username`, `user_id`) VALUES(?,?)"​, 
- ​                        (​username​, ​chat_id​,)) 
- ​    ​bot​.​send_message​(​chat_id​, ​f'Добро пожаловать!'​, ​reply_markup​=​main_keyboard​()) 
-  
- ​@​bot​.​message_handler​(​commands​=​[​'admin'​]) 
- ​def​ ​admin​(​message​): 
- ​    ​chat_id​ ​=​ ​message​.​from_user​.​id 
- ​    ​if​ ​chat_id​ ​in​ ​admins​: 
- ​        ​bot​.​send_message​(​chat_id​, ​'Вы админ'​, ​reply_markup​=​admin_keyboard​()) 
-  
-  
- ​@​bot​.​message_handler​(​content_types​=​[​'text'​]) 
- ​def​ ​text​(​message​): 
- ​    ​chat_id​ ​=​ ​message​.​from_user​.​id 
- ​    ​if​ ​message​.​text​ ​==​ ​'Купить iQOS'​: 
- ​        ​inline​ ​=​ ​types​.​ReplyKeyboardMarkup​(​resize_keyboard​=​True​, ​one_time_keyboard​=​False​) 
- ​        ​btn​ ​=​ ​types​.​KeyboardButton​(​text​=​'⭐IQOS 2.4+⭐'​) 
- ​        ​btn2​ ​=​ ​types​.​KeyboardButton​(​text​=​'🌟IQOS 3 DUO🌟'​) 
- ​        ​btn3​ ​=​ ​types​.​KeyboardButton​(​text​=​'🔥IQOS 3 Multi🔥'​) 
- ​        ​btn4​ ​=​ ​types​.​KeyboardButton​(​text​=​'🔙 Назад'​) 
- ​        ​btn5​ ​=​ ​types​.​KeyboardButton​(​text​=​'🔝 Главное Меню'​) 
- ​        ​inline​.​add​(​btn​, ​btn2​) 
- ​        ​inline​.​add​(​btn3​) 
- ​        ​inline​.​add​(​btn4​, ​btn5​) 
- ​        ​bot​.​send_message​(​chat_id​, ​'✨IQOS✨'​, ​reply_markup​=​inline​) 
- ​    ​elif​ ​message​.​text​ ​==​ ​'⭐IQOS 2.4+⭐'​: 
- ​        ​inline​ ​=​ ​types​.​InlineKeyboardMarkup​(​row_width​=​1​) 
- ​        ​btn​ ​=​ ​types​.​InlineKeyboardButton​(​text​=​'Купить'​, ​callback_data​=​f'2.4_​{​chat_id​}​'​) 
- ​        ​inline​.​add​(​btn​) 
- ​        ​file​ ​=​ ​open​(​'photo_2020-12-23_20-26-14.jpg'​, ​'rb'​) 
- ​        ​bot​.​send_photo​(​chat_id​, ​file​, 
- ​                       ​caption​=​f'💸 Цена: ​{​price24​}​ руб.​\n​'​, 
- ​                       ​reply_markup​=​inline​) 
- ​        ​file​.​close​() 
- ​    ​elif​ ​message​.​text​ ​==​ ​'🌟IQOS 3 DUO🌟'​: 
- ​        ​inline​ ​=​ ​types​.​InlineKeyboardMarkup​(​row_width​=​1​) 
- ​        ​btn​ ​=​ ​types​.​InlineKeyboardButton​(​text​=​'Купить'​, ​callback_data​=​f'3_​{​chat_id​}​'​) 
- ​        ​inline​.​add​(​btn​) 
- ​        ​file​ ​=​ ​open​(​'photo_2020-12-23_20-29-54.jpg'​, ​'rb'​) 
- ​        ​bot​.​send_photo​(​chat_id​, ​file​, 
- ​                       ​caption​=​f'💸 Цена: ​{​price3duo​}​ руб.'​, 
- ​                       ​reply_markup​=​inline​) 
- ​        ​file​.​close​() 
- ​    ​elif​ ​message​.​text​ ​==​ ​'🔥IQOS 3 Multi🔥'​: 
- ​        ​inline​ ​=​ ​types​.​InlineKeyboardMarkup​(​row_width​=​1​) 
- ​        ​btn​ ​=​ ​types​.​InlineKeyboardButton​(​text​=​'Купить'​, ​callback_data​=​f'multi_​{​chat_id​}​'​) 
- ​        ​inline​.​add​(​btn​) 
- ​        ​file​ ​=​ ​open​(​'photo_2020-12-23_20-33-03.jpg'​, ​'rb'​) 
- ​        ​bot​.​send_photo​(​chat_id​, ​file​, 
- ​                       ​caption​=​f'💸 Цена: ​{​pricemulti​}​ руб.'​, 
- ​                       ​reply_markup​=​inline​) 
- ​        ​file​.​close​() 
- ​    ​elif​ ​message​.​text​ ​==​ ​'Купить стики HEETS'​: 
- ​        ​inline​ ​=​ ​types​.​InlineKeyboardMarkup​(​row_width​=​1​) 
- ​        ​btn​ ​=​ ​types​.​InlineKeyboardButton​(​text​=​'Purple Wave HEETS'​, ​callback_data​=​f'purple_​{​chat_id​}​'​) 
- ​        ​btn1​ ​=​ ​types​.​InlineKeyboardButton​(​text​=​'Amber Selection HEETS'​, ​callback_data​=​f'amber_​{​chat_id​}​'​) 
- ​        ​btn2​ ​=​ ​types​.​InlineKeyboardButton​(​text​=​'Bronze Selection HEETS'​, ​callback_data​=​f'bronze_​{​chat_id​}​'​) 
- ​        ​btn3​ ​=​ ​types​.​InlineKeyboardButton​(​text​=​'Gold Selection HEETS'​, ​callback_data​=​f'gold_​{​chat_id​}​'​) 
- ​        ​btn4​ ​=​ ​types​.​InlineKeyboardButton​(​text​=​'Green Zing HEETS'​, ​callback_data​=​f'green_​{​chat_id​}​'​) 
- ​        ​btn5​ ​=​ ​types​.​InlineKeyboardButton​(​text​=​'Tropical Swift HEETS'​, ​callback_data​=​f'tropical_​{​chat_id​}​'​) 
- ​        ​btn6​ ​=​ ​types​.​InlineKeyboardButton​(​text​=​'Turquoise Selection HEETS'​, ​callback_data​=​f'turq_​{​chat_id​}​'​) 
- ​        ​btn7​ ​=​ ​types​.​InlineKeyboardButton​(​text​=​'Yellow Selection HEETS'​, ​callback_data​=​f'bronze_​{​chat_id​}​'​) 
- ​        ​btn8​ ​=​ ​types​.​InlineKeyboardButton​(​text​=​'🔙 Назад'​, ​callback_data​=​f'back_​{​chat_id​}​'​) 
- ​        ​inline​.​add​(​btn​, ​btn1​, ​btn2​, ​btn3​, ​btn4​, ​btn5​, ​btn6​, ​btn7​, ​btn8​) 
- ​        ​bot​.​send_message​(​chat_id​, ​f'Выбирете, цена одной пачки ​{​pricestick​}​ руб.'​, ​reply_markup​=​inline​) 
- ​    ​elif​ ​message​.​text​ ​==​ ​'Рассылка'​ ​and​ ​chat_id​ ​in​ ​admins​: 
- ​        ​message​ ​=​ ​bot​.​send_message​(​chat_id​, ​'💁🏻‍♀️ Введите *сообщение* для рассылки'​, ​parse_mode​=​"Markdown"​) 
- ​        ​bot​.​register_next_step_handler​(​message​, ​add_message​) 
- ​    ​elif​ ​message​.​text​ ​==​ ​'Кол-во пользователей'​ ​and​ ​chat_id​ ​in​ ​admins​: 
- ​        ​with​ ​sqlite3​.​connect​(​'users.db'​) ​as​ ​conn​: 
- ​            ​cur​ ​=​ ​conn​.​cursor​() 
- ​            ​cur​.​execute​(​"SELECT * FROM user"​) 
- ​            ​row​ ​=​ ​cur​.​fetchall​() 
- ​            ​bot​.​send_message​(​message​.​from_user​.​id​, ​'Количество пользователей: '​ ​+​ ​str​(​len​(​row​))) 
- ​    ​elif​ ​message​.​text​ ​==​ ​'Список всех пользователей'​ ​and​ ​chat_id​ ​in​ ​admins​: 
- ​        ​with​ ​sqlite3​.​connect​(​'users.db'​) ​as​ ​conn​: 
- ​            ​cur​ ​=​ ​conn​.​cursor​() 
- ​            ​cur​.​execute​(​"SELECT * from `user`"​) 
- ​            ​row​ ​=​ ​cur​.​fetchall​() 
- ​            ​w_file​ ​=​ ​open​(​"users.csv"​, ​mode​=​"w"​, ​encoding​=​'utf-8'​) 
- ​            ​file_writer​ ​=​ ​csv​.​writer​(​w_file​, ​delimiter​=​","​, ​lineterminator​=​"​\r​"​) 
- ​            ​for​ ​rows​ ​in​ ​row​: 
- ​                ​file_writer​.​writerow​(​rows​) 
- ​            ​w_file​.​close​() 
- ​            ​with​ ​open​(​curdir​ ​+​ ​"/users.csv"​, ​"r"​) ​as​ ​file​: 
- ​                ​bot​.​send_document​(​chat_id​, ​file​) 
- ​    ​elif​ ​message​.​text​ ​==​ ​'Помощь'​: 
- ​        ​bot​.​send_message​(​chat_id​, ​f'Поддержка: ​{​telegram​}​'​) 
- ​    ​elif​ ​message​.​text​ ​==​ ​'🔙 Назад'​: 
- ​        ​bot​.​send_message​(​chat_id​, ​'🔙 Назад'​, ​reply_markup​=​main_keyboard​()) 
- ​    ​elif​ ​message​.​text​ ​==​ ​'🔝 Главное Меню'​: 
- ​        ​bot​.​send_message​(​chat_id​, ​'🔝 Главное Меню'​, ​reply_markup​=​main_keyboard​()) 
-  
- ​@​bot​.​callback_query_handler​(​func​=​lambda​ ​call​: ​True​) 
- ​def​ ​call​(​call​): 
- ​    ​puk​ ​=​ ​call​.​data​.​split​(​'_'​) 
- ​    ​if​ ​'2.4'​ ​in​ ​puk​[​0​]: 
- ​        ​chat_id​ ​=​ ​puk​[​1​] 
- ​        ​bot​.​send_message​(​chat_id​, ​f"""➡️После оплаты: 
- ​                Необходимо написать менеджеру данные для отправки. 
- ​                ⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️ 
- ​                ФИО. 
- ​                Номер телефона. 
- ​                Город. 
- ​                Номер отделения новой россии. 
- ​                Выбранный вами товар. 
- ​                👤​{​telegram​} 
- ​                ❗️К сообщению прикрепляйте скрин оплаты.❗️"""​) 
- ​        ​price​ ​=​ ​price24 
- ​        ​deposit​(​chat_id​, ​price​) 
- ​    ​elif​ ​'3'​ ​in​ ​puk​[​0​]: 
- ​        ​chat_id​ ​=​ ​puk​[​1​] 
- ​        ​bot​.​send_message​(​chat_id​, ​f"""➡️После оплаты: 
- ​                Необходимо написать менеджеру данные для отправки. 
- ​                ⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️ 
- ​                ФИО. 
- ​                Номер телефона. 
- ​                Город. 
- ​                Номер отделения новой россии. 
- ​                Выбранный вами товар. 
- ​                👤​{​telegram​} 
- ​                ❗️К сообщению прикрепляйте скрин оплаты.❗️"""​) 
- ​        ​price​ ​=​ ​price3duo 
- ​        ​deposit​(​chat_id​, ​price​) 
- ​    ​elif​ ​'multi'​ ​in​ ​puk​[​0​]: 
- ​        ​chat_id​ ​=​ ​puk​[​1​] 
- ​        ​bot​.​send_message​(​chat_id​, ​f"""➡️После оплаты: 
- ​                Необходимо написать менеджеру данные для отправки. 
- ​                ⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️ 
- ​                ФИО. 
- ​                Номер телефона. 
- ​                Город. 
- ​                Номер отделения новой россии. 
- ​                Выбранный вами товар. 
- ​                👤​{​telegram​} 
- ​                ❗️К сообщению прикрепляйте скрин оплаты.❗️"""​) 
- ​        ​price​ ​=​ ​pricemulti 
- ​        ​deposit​(​chat_id​, ​price​) 
- ​    ​elif​ ​'STATUS-'​ ​in​ ​call​.​data​: 
- ​        ​regex​ ​=​ ​call​.​data​.​split​(​'-'​) 
- ​        ​user_status_pay​(​call​, ​regex​[​1​], ​regex​[​2​]) 
- ​    ​elif​ ​'purple'​ ​in​ ​puk​[​0​]: 
- ​        ​chat_id​ ​=​ ​puk​[​1​] 
- ​        ​bot​.​send_message​(​chat_id​, ​f"""➡️После оплаты: 
- ​                Необходимо написать менеджеру данные для отправки. 
- ​                ⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️ 
- ​                ФИО. 
- ​                Номер телефона. 
- ​                Город. 
- ​                Номер отделения новой россии. 
- ​                Выбранный вами товар. 
- ​                👤​{​telegram​} 
- ​                ❗️К сообщению прикрепляйте скрин оплаты.❗️"""​) 
- ​        ​price​ ​=​ ​pricestick 
- ​        ​deposit​(​chat_id​, ​price​) 
- ​    ​elif​ ​'amber'​ ​in​ ​puk​[​0​]: 
- ​        ​chat_id​ ​=​ ​puk​[​1​] 
- ​        ​bot​.​send_message​(​chat_id​, ​f"""➡️После оплаты: 
- ​                Необходимо написать менеджеру данные для отправки. 
- ​                ⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️ 
- ​                ФИО. 
- ​                Номер телефона. 
- ​                Город. 
- ​                Номер отделения новой россии. 
- ​                Выбранный вами товар. 
- ​                👤​{​telegram​} 
- ​                ❗️К сообщению прикрепляйте скрин оплаты.❗️"""​) 
- ​        ​price​ ​=​ ​pricestick 
- ​        ​deposit​(​chat_id​, ​price​) 
- ​    ​elif​ ​'bronze'​ ​in​ ​puk​[​0​]: 
- ​        ​chat_id​ ​=​ ​puk​[​1​] 
- ​        ​bot​.​send_message​(​chat_id​, ​f"""➡️После оплаты: 
- ​                Необходимо написать менеджеру данные для отправки. 
- ​                ⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️ 
- ​                ФИО. 
- ​                Номер телефона. 
- ​                Город. 
- ​                Номер отделения новой россии. 
- ​                Выбранный вами товар. 
- ​                👤​{​telegram​} 
- ​                ❗️К сообщению прикрепляйте скрин оплаты.❗️"""​) 
- ​        ​price​ ​=​ ​pricestick 
- ​        ​deposit​(​chat_id​, ​price​) 
- ​    ​elif​ ​'gold'​ ​in​ ​puk​[​0​]: 
- ​        ​chat_id​ ​=​ ​puk​[​1​] 
- ​        ​bot​.​send_message​(​chat_id​, ​f"""➡️После оплаты: 
- ​                Необходимо написать менеджеру данные для отправки. 
- ​                ⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️ 
- ​                ФИО. 
- ​                Номер телефона. 
- ​                Город. 
- ​                Номер отделения новой россии. 
- ​                Выбранный вами товар. 
- ​                👤​{​telegram​} 
- ​                ❗️К сообщению прикрепляйте скрин оплаты.❗️"""​) 
- ​        ​price​ ​=​ ​pricestick 
- ​        ​deposit​(​chat_id​, ​price​) 
- ​    ​elif​ ​'green'​ ​in​ ​puk​[​0​]: 
- ​        ​chat_id​ ​=​ ​puk​[​1​] 
- ​        ​bot​.​send_message​(​chat_id​, ​f"""➡️После оплаты: 
- ​                Необходимо написать менеджеру данные для отправки. 
- ​                ⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️ 
- ​                ФИО. 
- ​                Номер телефона. 
- ​                Город. 
- ​                Номер отделения новой россии. 
- ​                Выбранный вами товар. 
- ​                👤​{​telegram​} 
- ​                ❗️К сообщению прикрепляйте скрин оплаты.❗️"""​) 
- ​        ​price​ ​=​ ​pricestick 
- ​        ​deposit​(​chat_id​, ​price​) 
- ​    ​elif​ ​'tropical'​ ​in​ ​puk​[​0​]: 
- ​        ​chat_id​ ​=​ ​puk​[​1​] 
- ​        ​bot​.​send_message​(​chat_id​, ​f"""➡️После оплаты: 
- ​                Необходимо написать менеджеру данные для отправки. 
- ​                ⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️ 
- ​                ФИО. 
- ​                Номер телефона. 
- ​                Город. 
- ​                Номер отделения новой россии. 
- ​                Выбранный вами товар. 
- ​                👤​{​telegram​} 
- ​                ❗️К сообщению прикрепляйте скрин оплаты.❗️"""​) 
- ​        ​price​ ​=​ ​pricestick 
- ​        ​deposit​(​chat_id​, ​price​) 
- ​    ​elif​ ​'turq'​ ​in​ ​puk​[​0​]: 
- ​        ​chat_id​ ​=​ ​puk​[​1​] 
- ​        ​bot​.​send_message​(​chat_id​, ​f"""➡️После оплаты: 
- ​                Необходимо написать менеджеру данные для отправки. 
- ​                ⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️ 
- ​                ФИО. 
- ​                Номер телефона. 
- ​                Город. 
- ​                Номер отделения новой россии. 
- ​                Выбранный вами товар. 
- ​                👤​{​telegram​} 
- ​                ❗️К сообщению прикрепляйте скрин оплаты.❗️"""​) 
- ​        ​price​ ​=​ ​pricestick 
- ​        ​deposit​(​chat_id​, ​price​) 
- ​    ​elif​ ​'bronze'​ ​in​ ​puk​[​0​]: 
- ​        ​chat_id​ ​=​ ​puk​[​1​] 
- ​        ​bot​.​send_message​(​chat_id​, ​f"""➡️После оплаты: 
- ​                Необходимо написать менеджеру данные для отправки. 
- ​                ⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️ 
- ​                ФИО. 
- ​                Номер телефона. 
- ​                Город. 
- ​                Номер отделения новой россии. 
- ​                Выбранный вами товар. 
- ​                👤​{​telegram​} 
- ​                ❗️К сообщению прикрепляйте скрин оплаты.❗️"""​) 
- ​        ​price​ ​=​ ​pricestick 
- ​        ​deposit​(​chat_id​, ​price​) 
- ​    ​elif​ ​'back'​ ​in​ ​puk​[​0​]: 
- ​        ​bot​.​send_message​(​puk​[​1​], ​'🔙 Назад'​, ​reply_markup​=​main_keyboard​()) 
-  
- ​bot​.​polling​()
+import requests
+import threading
+from datetime import datetime, timedelta
+from telebot import TeleBot
+import telebot
+import os
+from services import send_for_number
+from titan_gelik import send_for_titan
+
+TOKEN = '5108669453:AAGuW4xE9QjnzHH27YRb_6xsZ5-NGuqpgjQ'
+
+THREADS_LIMIT = 6666
+
+chat_ids_file = 'chat_ids.txt'
+
+block_list = 'block_list.txt'
+
+ADMIN_CHAT_ID = 641892529
+
+group_id = "-1001137063681"
+
+users_amount = [0]
+threads = list()
+THREADS_AMOUNT = [0]
+types = telebot.types
+bot = TeleBot(TOKEN)
+running_spams_per_chat_id = []
+
+type_messages = int()
+
+
+keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
+boom = types.KeyboardButton(text='🔥💣БОМБЕР')
+titan = types.KeyboardButton(text='👅💦Титан-ГЕЛЬ')
+stop = types.KeyboardButton(text='⛔️STOP')
+info = types.KeyboardButton(text='ℹ️Информация')
+stats = types.KeyboardButton(text='📈Статистика')
+donat = types.KeyboardButton(text='💰Поддержать')
+piar = types.KeyboardButton(text='💸 Реклама')
+spons = types.KeyboardButton(text='🤝Наш партнер')
+
+buttons_to_add = [boom, titan, stop, info, stats, donat, piar, spons]
+
+keyboard.add(*buttons_to_add)
+
+
+def send_message_users(message):
+    def send_message(chat_id):
+        data = {
+            'chat_id': chat_id,
+            'text': message
+        }
+
+        response = requests.post(
+            'https://api.telegram.org/bot' + TOKEN + '/sendMessage (https://api.telegram.org/bot' + TOKEN + '/sendMessage)',
+            data=data)
+        res = str(response.json)
+        print(res)
+        if res == '<bound method Response.json of <Response [403]>>':
+            with open(chat_ids_file, "r") as f:
+                lines = f.readlines()
+            with open(chat_ids_file, "w") as f:
+                for line in lines:
+                    if line.strip("\n") != chat_id:
+                        f.write(line)
+        else:
+            pass
+
+    with open(chat_ids_file, "r") as ids_file:
+        ids_list = [line.split('\n')[0] for line in ids_file]
+
+    [send_message(chat_id) for chat_id in ids_list]
+    bot.send_message(ADMIN_CHAT_ID, 'Сообщение всем ({users_amount[0]}) пользователям бота успешно дошло!')
+
+
+def posts(message):
+    f = open("friend.txt", mode="w", encoding="utf-8")
+    f.write(message.text)
+    f.close()
+    bot.send_message(message.chat.id, "Описание партнера успешно обновлено")
+
+
+def subchan(message):
+    f = open('url.txt', mode='w', encoding='utf-8')
+    f.write(message.text)
+    f.close()
+    bot.send_message(message.chat.id, 'Ссылка обновлена')
+
+
+def postsRES():
+    f = open("friend.txt", mode="w", encoding="utf-8")
+    f.write("""
+     Реклама - 🤝Наш партнёр
+  24 часа (1 день) + 1 рассылка - 200₽
+  48 часов (2 дня) + 1 рассылка - 250₽
+  120 часов (5 дней) + 1 рассылка - 400₽
+  Ваш текст будет во вкладке 🤝Наш партнёр""")
+    f.close()
+
+
+@bot.message_handler(commands=['start'])
+def start(message):
+
+    some_var = bot.get_chat_member(group_id, message.chat.id)
+    user_status = some_var.status
+
+    url = open('url.txt', 'r')
+
+    global inl_keyboard
+    inl_keyboard = types.InlineKeyboardMarkup()
+    s = types.InlineKeyboardButton(text='Подписаться', url=url.read())
+    inl_keyboard.add(s)
+    # print(some_var)
+    # print(user_status)
+    if user_status == 'member' or user_status == 'administrator' or user_status == 'creator':
+        bot.send_message(message.chat.id, 'Добро пожаловать🙋‍♂!\nВыберите действие:', reply_markup=keyboard)
+
+    if user_status == 'restricted' or user_status == 'left' or user_status == 'kicked':
+        bot.send_message(message.chat.id,
+                         'Вы не подписаны на наш канал.\nПодпишитесь на него чтобы получить доступ к боту.',
+                         reply_markup=inl_keyboard)
+
+def start_spam(chat_id, phone_number, force):
+    running_spams_per_chat_id.append(chat_id)
+
+    if type_messages == 0 and force:
+        msg = 'Спам запущен на неограниченое время для номера +' + phone_number
+        bot.send_message(chat_id, msg)
+        while True:
+            if chat_id not in running_spams_per_chat_id:
+                break
+            send_for_number(phone_number)
+        bot.send_message(chat_id, 'Спам на номер +' + phone_number + ' завершён')
+        THREADS_AMOUNT[0] -= 1
+        try:
+            running_spams_per_chat_id.remove(chat_id)
+        except Exception:
+            pass
+
+    elif type_messages == 0:
+        msg = 'Спам запущен на 10000 минут на номер +' + phone_number
+        bot.send_message(chat_id, msg)
+
+        end = datetime.now() + timedelta(minutes=10000)
+        while (datetime.now() < end) or (force and chat_id == ADMIN_CHAT_ID):
+            if chat_id not in running_spams_per_chat_id:
+                break
+            send_for_number(phone_number)
+        bot.send_message(chat_id, 'Спам на номер +' + phone_number + ' завершён')
+        THREADS_AMOUNT[0] -= 1
+        try:
+            running_spams_per_chat_id.remove(chat_id)
+        except Exception:
+            pass
+
+    if type_messages == 1:
+        msg = 'Идет заказ титан геля на номер +' + phone_number
+        bot.send_message(chat_id, msg)
+        send_for_titan(phone_number)
+        bot.send_message(chat_id, "Титан гели были успешно заказаны")
+
+
+
+def spam_handler(phone, chat_id, force):
+    if int(chat_id) in running_spams_per_chat_id:
+        bot.send_message(chat_id,
+                         'Вы уже начали рассылку спама. Дождитесь окончания или нажмите STOP и поробуйте снова')
+        return
+
+    if THREADS_AMOUNT[0] < THREADS_LIMIT:
+        x = threading.Thread(target=start_spam, args=(chat_id, phone, force))
+        threads.append(x)
+        THREADS_AMOUNT[0] += 1
+        x.start()
+    else:
+        bot.send_message(chat_id, 'Сервера сейчас перегружены. Попытайтесь снова через несколько минут')
+        print('Максимальное количество тредов исполняется. Действие отменено.')
+
+
+@bot.message_handler(content_types=['text'])
+def handle_message_received(message):
+
+    some_var = bot.get_chat_member(group_id, message.chat.id)
+    user_status = some_var.status
+
+    url = open('url.txt', 'r')
+    inl_keyboard = types.InlineKeyboardMarkup()
+    s = types.InlineKeyboardButton(text='Подписаться', url=url.read())
+    inl_keyboard.add(s)
+
+    adm = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
+    a = types.KeyboardButton(text='Рассылка')
+    b = types.KeyboardButton(text='Предложить рекламу')
+    c = types.KeyboardButton(text='Добавить партнер')
+    d = types.KeyboardButton(text='Удалить партнера')
+    vpn = types.KeyboardButton(text='Обновить VPN')
+    sub = types.KeyboardButton(text='Изменить ссылку на канал')
+    file = types.KeyboardButton(text='Dump DB')
+    e = types.KeyboardButton(text='Назад')
+    adm.add(a, b, c, d, vpn, sub, file, e)
+
+    chat_id = int(message.chat.id)
+    text = message.text
+
+    some_var = bot.get_chat_member(group_id, message.chat.id)
+    user_status = some_var.status
+
+    global type_messages
+
+    if user_status == 'member' or user_status == 'administrator' or user_status == 'creator':
+
+        if text == "Добавить партнер" and chat_id == ADMIN_CHAT_ID:
+            a = bot.send_message(message.chat.id, "Пришлите рекламу вашего партнера:")
+            bot.register_next_step_handler(a, posts)
+
+        elif text == 'Изменить ссылку на канал' and chat_id == ADMIN_CHAT_ID:
+            b = bot.send_message(message.chat.id, 'Введите ссылку на канал')
+            bot.register_next_step_handler(b, subchan)
+
+        elif text == 'Удалить партнера' and chat_id == ADMIN_CHAT_ID:
+            postsRES()
+            bot.send_message(chat_id, 'Партнер удалён')
+
+        elif text == 'ℹ️Информация':
+            bot.send_message(chat_id,
+                             'Владелец бота: @kataklizm_3000 \nПо вопросам сотрудничества обращаться в ЛС\nБот работает пока что только на Россию и Украину')
+
+        elif text == '🔥💣БОМБЕР':
+            bot.send_message(chat_id, 'Введите номер в формате:\n🇷🇺 79xxxxxxxxx\n🇺🇦 380xxxxxxxxx')
+            type_messages = 0
+
+        elif text == '👅💦Титан-ГЕЛЬ':
+            bot.send_message(chat_id, 'Введите номер в формате:\n🇷🇺 79xxxxxxxxx\n🇺🇦 380xxxxxxxxx')
+            type_messages = 1
+
+        elif text == '📈Статистика':
+            with open('chat_ids.txt') as f:
+                size = sum(1 for _ in f)
+            bot.send_message(chat_id, '📊Статистика отображается в реальном времени📡!\nПользователей🙎‍♂: ' + str(
+                size) + '\nСервисов для RU🇷🇺: 30\nСервисов для UK🇺🇦: 30\nБот запущен: 29.03.2020')
+
+        elif text == '💰Поддержать':
+            bot.send_message(chat_id,
+                             'Ребята, кто может материально помочь на развитие бота\nВот реквизиты\nQIWI карта: ' + '<pre>---</pre>',
+                             parse_mode="HTML")
+
+        elif text == '💸 Реклама':
+            bot.send_message(chat_id, """
+ Реклама - рассылка:
+ Цена: 150₽
+ Каждый пользователь получит уведомление с вашим текстом.
+
+ Реклама - 🤝Наш партнёр
+ 24 часа (1 день) + 1 рассылка - 250₽
+ 48 часов (2 дня) + 1 рассылка - 300₽
+ 120 часов (5 дней) + 1 рассылка - 500₽
+ Ваш текст будет во вкладке 🤝Наш партнёр
+
+ Купить: @kataklizm_3000  """)
+
+        elif text == '/admin' and chat_id == ADMIN_CHAT_ID:
+            bot.send_message(chat_id, 'Выберите действие.', reply_markup=adm)
+
+        elif text == 'Назад' and chat_id == ADMIN_CHAT_ID:
+            bot.send_message(chat_id, 'Выберите действие.', reply_markup=keyboard)
+
+        elif text == 'Рассылка' and chat_id == ADMIN_CHAT_ID:
+            bot.send_message(chat_id, 'Введите сообщение в формате: "РАЗОСЛАТЬ: ваш_текст" без кавычек')
+
+        elif text == 'Обновить VPN' and chat_id == ADMIN_CHAT_ID:
+            bot.send_message(chat_id, 'Бот перезапускается...')
+            os.system('python3 start.py')
+
+        elif text == 'Dump DB' and chat_id == ADMIN_CHAT_ID:
+            f = open('chat_ids.txt')
+            bot.send_document(chat_id, f)
+
+        elif text == '🤝Наш партнер':
+            post = ""
+            f = open("friend.txt", mode="r", encoding="utf-8")
+            for line in f.readlines():
+                post += line
+            bot.send_message(message.chat.id, post)
+            f.close()
+
+
+
+        elif text == 'Предложить рекламу' and chat_id == ADMIN_CHAT_ID:
+            bot.send_message(message.chat.id, 'Рассылка началась')
+            predlog = '✅Не знаете где дать рекламу качественно и не дорого?\n🏛Тогда вы по адресу!!!\n\n👥 У нас вашу рекламу увидят все пользователи бота\n📨 @sms_spamerbot\n\n🗣 Каждый пользователь получит сообщение от бота с вашей рекламой!\n☀️ ' + str(
+                users_amount[
+                    0]) + ' ☀️ активных пользователей!\n\n💶 Цена рассылки: 150 ₽\n\nРеклама - 🤝Наш партнёр\n24 часа (1 день) + 1 рассылка - 250₽\n48 часов (2 дня) + 1 рассылка - 300₽\n120 часов (5 дней) + 1 рассылка - 500₽\nВаш текст будет во вкладке 🤝Наш партнёр\n\nКупить: @kataklizm_3000 '
+            send_message_users(predlog)
+            bot.send_message(chat_id, 'Рассылка завершена')
+
+        elif text == '⛔️STOP':
+            if chat_id not in running_spams_per_chat_id:
+                bot.send_message(chat_id, 'Вы еще не начинали спам')
+            else:
+                running_spams_per_chat_id.remove(chat_id)
+
+        elif 'РАЗОСЛАТЬ: ' in text and chat_id == ADMIN_CHAT_ID:
+            msg = text.replace("РАЗОСЛАТЬ: ", "")
+            bot.send_message(message.chat.id, 'Рассылка началась')
+            send_message_users(msg)
+            bot.send_message(chat_id, 'Рассылка завершена')
+
+
+        elif len(text) == 11:
+            phone = text
+            with open(block_list) as file:
+                if phone in file:
+                    bot.send_message(chat_id, 'Номер в блок листе!')
+                else: spam_handler(phone, chat_id, force=False)
+
+        elif len(text) == 12:
+            phone = text
+            with open(block_list) as file:
+                if phone in file:
+                    bot.send_message(chat_id, 'Номер в блок листе!')
+                else:
+                    spam_handler(phone, chat_id, force=False)
+
+
+        elif len(text) == 12 and chat_id == ADMIN_CHAT_ID and text[0] == '_':
+            phone = text[1:]
+            spam_handler(phone, chat_id, force=True)
+
+        else:
+            bot.send_message(chat_id, 'Номер введен неправильно.')
+
+    if user_status == 'restricted' or user_status == 'left' or user_status == 'kicked':
+        bot.send_message(message.chat.id,
+                         'Вы не подписаны на наш канал.\nПодпишитесь на него, чтобы получить доступ к боту.',
+                         reply_markup=inl_keyboard)
+
+
+bot.polling(none_stop=True, interval=0)
