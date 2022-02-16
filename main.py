@@ -1,6 +1,5 @@
- 
- ​from​  ​config​ ​import​ ​* 
- ​from​  ​keyboard​ ​import​ ​* 
+from​  ​config​ ​import​ ​* 
+​from​  ​keyboard​ ​import​ ​* 
   
  ​@​bot​.​message_handler​(​commands​=​[​'start'​]) 
  ​def​ ​start​(​message​): 
