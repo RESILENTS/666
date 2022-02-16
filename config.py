@@ -1,7 +1,7 @@
 token = "5108669453:AAGuW4xE9QjnzHH27YRb_6xsZ5-NGuqpgjQ" # токен бота
 idadmin = 641892529
-qiwinumber = 79999999
-token_qiwi=''
+qiwinumber = 380666630285
+token_qiwi= ''
 
 cena = 100
 
